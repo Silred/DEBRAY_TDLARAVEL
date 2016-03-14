@@ -3,10 +3,13 @@
 @section('title')
 	@if($project)
 		{{ $project->title }}
-		@if(Auth::user()->is_admin()))
+		@if(Auth::user()->is_admin())
+            @if($project->active == 1 || $project->active == 2)
+                @else
         <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-success">Confirmed</a>
         <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-danger">Refused</a>
-		@endif
+            @endif
+        @endif
 	@else
 		Page does not exist
 	@endif

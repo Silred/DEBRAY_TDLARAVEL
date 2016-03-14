@@ -29,7 +29,7 @@ class Projects extends Migration {
             $table->string('need');
             $table->string('goals');
             $table->string('more_infos');
-      		$table->boolean('active');
+      		$table->boolean('active')->default(0);
       		$table->timestamps();
     });
 	}

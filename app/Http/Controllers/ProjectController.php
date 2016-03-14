@@ -72,7 +72,6 @@ class ProjectController extends Controller {
         $project->need = $request->get('need');
         $project->goals = $request->get('goals');
         $project->more_infos = $request->get('more_infos');
-        $project->active = $request->get('active');
 			$message = 'Post saved successfully';
 		$project->save();
 		return redirect('/')->withMessage($message);
