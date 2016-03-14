@@ -1,10 +1,11 @@
 @extends('app')
 
 @section('title')
-	@if($post)
-		{{ $post->title }}
-		@if(!Auth::guest() && ($post->author_id == Auth::user()->id || Auth::user()->is_admin()))
-			<button class="btn" style="float: right"><a href="{{ url('edit/'.$post->slug)}}">Edit Post</a></button>
+	@if($project)
+		{{ $project->title }}
+		@if(Auth::user()->is_admin()))
+        <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-success">Confirmed</a>
+        <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-danger">Refused</a>
 		@endif
 	@else
 		Page does not exist
@@ -12,53 +13,84 @@
 @endsection
 
 @section('title-meta')
-<p>{{ $post->created_at->format('M d,Y \a\t h:i a') }} By <a href="{{ url('/user/'.$post->author_id)}}">{{ $post->author->name }}</a></p>
+<p>{{ $project->created_at->format('M d,Y \a\t h:i a') }}</p>
 @endsection
 
 @section('content')
 
-@if($post)
-	<div>
-		{!! $post->body !!}
-	</div>	
-	<div>
-		<h2>Leave a comment</h2>
-	</div>
-	@if(Auth::guest())
-		<p>Login to Comment</p>
-	@else
-		<div class="panel-body">
-			<form method="post" action="/comment/add">
-				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<input type="hidden" name="on_post" value="{{ $post->id }}">
-				<input type="hidden" name="slug" value="{{ $post->slug }}">
-				<div class="form-group">
-					<textarea required="required" placeholder="Enter comment here" name = "body" class="form-control"></textarea>
-				</div>
-				<input type="submit" name='post_comment' class="btn btn-success" value = "Post"/>
-			</form>
-		</div>
-	@endif
-	
-	<div>
-		@if($comments)
-		<ul style="list-style: none; padding: 0">
-			@foreach($comments as $comment)
-				<li class="panel-body">
-					<div class="list-group">
-						<div class="list-group-item">
-							<h3>{{ $comment->author->name }}</h3>
-							<p>{{ $comment->created_at->format('M d,Y \a\t h:i a') }}</p>
-						</div>
-						<div class="list-group-item">
-							<p>{{ $comment->body }}</p>
-						</div>
-					</div>
-				</li>
-			@endforeach
-		</ul>
-		@endif
-	</div>
+@if($project)
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Client name</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->client_name !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Client address</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->client_adresse !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Client mail</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->client_mail !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Client phone number</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->client_phone !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Client informations</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->client_info !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Project type</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->project_type !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Context</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->context !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Need</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->need !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Goals</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->goals !!}</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>More informations</h3></div>
+        <div class="panel-body">
+            <h4>{!! $project->more_infos !!}</h4>
+        </div>
+    </div>
+
+
 @else
 404 error
 @endif

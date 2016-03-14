@@ -91,7 +91,7 @@ class ProjectController extends Controller {
         {
             return redirect('/')->withErrors('requested page not found');
         }
-        return view('project.show')->withProject($project);
+        return view('projects.show')->withProject($project);
 	}
 
 	/**
