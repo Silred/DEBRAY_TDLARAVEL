@@ -3,7 +3,7 @@ use Illuminate\Database\Eloquent\Model;
 
 // instance of Posts class will refer to posts table in database
 
-class Posts extends Model {
+class Projects extends Model {
     //restricts columns from modifying
     protected $guarded = [];
     // posts has many comments

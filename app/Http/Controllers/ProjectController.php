@@ -1,0 +1,153 @@
+<?php namespace App\Http\Controllers;
+
+
+use App\Http\Requests;
+use App\Http\Requests\ProjectFormRequest;
+use App\Http\Controllers\Controller;
+use App\Projects;
+use Illuminate\Http\Request;
+
+class ProjectController extends Controller {
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		//fetch 10 projects
+		$posts = Posts::where('active',1)->orderBy('created_at','desc')->paginate(10);
+		//page heading
+		$title = 'Latest Projects';
+		//return home.blade.php template from resources/views folder
+		return view('project')->withPosts($posts)->withTitle($title);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function create(Request $request)
+	{
+		// if user can submit project
+		if($request->user()->can_project())
+		{
+			return view('projects.create');
+		}
+		else
+		{
+			return redirect('/')->withErrors('You have not sufficient permissions for writing project');
+		}
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store(ProjectFormRequest $request)
+	{
+		$project = new Projects();
+		$project->title = $request->get('title');
+		$project->client_name = $request->get('client_name');
+		$project->slug = str_slug($project->title);
+        $project->client_adresse = $request->get('client_adresse');
+        $project->client_mail = $request->get('client_mail');
+        $project->client_phone = $request->get('client_phone');
+        $project->contact_name = $request->get('contact_name');
+        $project->contact_adresse = $request->get('contact_adresse');
+        $project->contact_mail = $request->get('contact_mail');
+        $project->contact_phone = $request->get('contact_phone');
+        $project->client_info = $request->get('client_info');
+        $project->project_type = $request->get('project_type');
+        $project->context = $request->get('context');
+        $project->need = $request->get('need');
+        $project->goals = $request->get('goals');
+        $project->more_infos = $request->get('more_infos');
+        $project->active = $request->get('active');
+			$message = 'Post saved successfully';
+		$project->save();
+		return redirect('edit/'.$project->slug)->withMessage($message);
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($slug)
+	{
+        $project = Projects::where('slug',$slug)->first();
+        if(!$project)
+        {
+            return redirect('/')->withErrors('requested page not found');
+        }
+        return view('project.show')->withProject($project);
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit(Request $request,$slug)
+	{
+        $project = Projects::where('slug',$slug)->first();
+        if($project && ($request->user()->is_admin()))
+            return view('project.edit')->with('project',$project);
+        return redirect('/')->withErrors('You have not sufficient permissions');
+    }
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update(Request $request)
+	{
+        $project_id = $request->input('post_id');
+        $project = Projects::find($project_id);
+        if($project && ($request->user()->is_admin()))
+        {
+            if($request->has('save'))
+            {
+                $project->active = 1;
+                $message = 'Project saved';
+                $landing = 'edit/'.$project->slug;
+            }
+            elseif ($request->has('refuse')) {
+                $project->active = 2;
+                $message = 'Project refused';
+                $landing = $project->slug;
+            }
+            else {
+                $project->active = 0;
+                $message = 'Project waiting';
+                $landing = $project->slug;
+            }
+            $project->save();
+            return redirect($landing)->withMessage($message);
+        }
+        else
+        {
+            return redirect('/')->withErrors('you have not sufficient permissions');
+        }
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		
+	}
+
+}

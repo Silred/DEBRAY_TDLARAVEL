@@ -13,7 +13,8 @@ class Projects extends Migration {
 		Schema::create('projects', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('title')->unique();;
+            $table->string('title')->unique();
+            $table->string('slug')->unique();
       		$table->string('client_name');
 			$table->string('client_adresse');
 			$table->string('client_mail');
