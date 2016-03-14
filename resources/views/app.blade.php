@@ -54,6 +54,9 @@
 									<li>
 										<a href="{{ url('/new-post') }}">Add new post</a>
 									</li>
+									<li>
+										<a href="{{ url('/list-project') }}">Projects</a>
+									</li>
 								@endif
 
 									@if (Auth::user()->can_project())
