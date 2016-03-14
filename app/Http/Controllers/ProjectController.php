@@ -119,24 +119,21 @@ class ProjectController extends Controller {
         $project = Projects::find($project_id);
         if($project && ($request->user()->is_admin()))
         {
-            if($request->has('save'))
+            if($request->has('confirmed'))
             {
                 $project->active = 1;
                 $message = 'Project saved';
-                $landing = 'edit/'.$project->slug;
             }
-            elseif ($request->has('refuse')) {
+            elseif ($request->has('rejected')) {
                 $project->active = 2;
                 $message = 'Project refused';
-                $landing = $project->slug;
             }
             else {
                 $project->active = 0;
                 $message = 'Project waiting';
-                $landing = $project->slug;
             }
             $project->save();
-            return redirect($landing)->withMessage($message);
+            return redirect('/project')->withMessage($message);
         }
         else
         {

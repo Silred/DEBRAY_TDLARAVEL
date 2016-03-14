@@ -6,8 +6,12 @@
 		@if(Auth::user()->is_admin())
             @if($project->active == 1 || $project->active == 2)
                 @else
-        <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-success">Confirmed</a>
-        <a href="{{  url('delete/'.$project->id.'?_token='.csrf_token()) }}" style="float: right; margin: 10px;" class="btn btn-danger">Refused</a>
+                <form method="post" action='{{ url("project/") }}'>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="project_id" value="{{ $project->id }}">
+                    <input type="submit" style="float: right; margin: 10px;" name="confirmed" value="Confirmed" class="btn btn-success"/>
+                    <input type="submit" style="float: right; margin: 10px;" name="rejected" value="Rejected" class="btn btn-danger"/>
+                </form>
             @endif
         @endif
 	@else
