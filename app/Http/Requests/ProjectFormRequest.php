@@ -26,7 +26,20 @@ class ProjectFormRequest extends Request {
         return [
             'title' => 'required|unique:posts|max:255',
             'title' => array('Regex:/^[A-Za-z0-9 ]+$/'),
-            'body' => 'required',
+            'client_name' => 'required',
+            'client_adresse' => 'required',
+            'client_mail' => 'required',
+            'client_phone' => 'required',
+            'contact_name' => 'required',
+            'contact_adresse' => 'required',
+            'contact_mail' => 'required',
+            'contact_phone' => 'required',
+            'client_info' => 'required',
+            'project_type' => 'required',
+            'context' => 'required',
+            'need' => 'required',
+            'goals' => 'required',
+            'more_infos' => 'required',
         ];
     }
 }

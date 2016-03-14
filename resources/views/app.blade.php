@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Blog Demo | Find All Together</title>
+		<title>TD LARAVEL</title>
 
 		<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -28,7 +28,6 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://www.findalltogether.com">Find All Together</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,13 +54,13 @@
 										<a href="{{ url('/new-post') }}">Add new post</a>
 									</li>
 									<li>
-										<a href="{{ url('/list-project') }}">Projects</a>
+										<a href="{{ url('/project') }}">Projects</a>
 									</li>
 								@endif
 
 									@if (Auth::user()->can_project())
 										<li>
-											<a href="{{ url('/new-project') }}">Add Project</a>
+											<a href="{{ url('/project/add') }}">Add Project</a>
 										</li>
 									@endif
 

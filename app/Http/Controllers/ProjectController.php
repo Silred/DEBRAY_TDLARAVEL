@@ -14,14 +14,20 @@ class ProjectController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		//fetch 10 projects
-		$posts = Posts::where('active',1)->orderBy('created_at','desc')->paginate(10);
-		//page heading
-		$title = 'Latest Projects';
-		//return home.blade.php template from resources/views folder
-		return view('project')->withPosts($posts)->withTitle($title);
+        if(($request->user()->is_admin())) {
+            //fetch 10 projects
+            $projects = Projects::orderBy('created_at', 'desc')->paginate(10);
+            //page heading
+            $title = 'Latest Projects';
+
+            return view('project')->withProjects($projects)->withTitle($title);
+        }
+        else
+        {
+            return redirect('/')->withErrors('You have not sufficient permissions for writing project');
+        }
 	}
 
 	/**
@@ -69,7 +75,7 @@ class ProjectController extends Controller {
         $project->active = $request->get('active');
 			$message = 'Post saved successfully';
 		$project->save();
-		return redirect('edit/'.$project->slug)->withMessage($message);
+		return redirect('/')->withMessage($message);
 	}
 
 	/**
@@ -110,7 +116,7 @@ class ProjectController extends Controller {
 	 */
 	public function update(Request $request)
 	{
-        $project_id = $request->input('post_id');
+        $project_id = $request->input('project_id');
         $project = Projects::find($project_id);
         if($project && ($request->user()->is_admin()))
         {
@@ -147,7 +153,7 @@ class ProjectController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		
+
 	}
 
 }

@@ -40,6 +40,14 @@ Route::group(['middleware' => ['auth']], function()
     // update project
     Route::post('project/update','ProjectController@update');
 
+    // display a project
+    Route::get('project/{slug}',['as' => 'project', 'uses' => 'ProjectController@show'])->where('slug', '[A-Za-z0-9-_]+');
+
+
+    // list project
+    Route::get('project','ProjectController@index');
+
+
 
 
 	// add comment
