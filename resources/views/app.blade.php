@@ -51,13 +51,17 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								@if (Auth::user()->can_post())
-								<li>
-									<a href="{{ url('/new-post') }}">Add new post</a>
-								</li>
-								<li>
-									<a href="{{ url('/user/'.Auth::id().'/posts') }}">My Posts</a>
-								</li>
+									<li>
+										<a href="{{ url('/new-post') }}">Add new post</a>
+									</li>
 								@endif
+
+									@if (Auth::user()->can_project())
+										<li>
+											<a href="{{ url('/new-project') }}">Add Project</a>
+										</li>
+									@endif
+
 								<li>
 									<a href="{{ url('/user/'.Auth::id()) }}">My Profile</a>
 								</li>
@@ -102,11 +106,6 @@
 							@yield('content')
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<p>Copyright &copy; 2015 | <a href="http://www.findalltogether.com">Find All Together</a></p>
 				</div>
 			</div>
 		</div>

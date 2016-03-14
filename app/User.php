@@ -46,7 +46,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function can_post()
 	{
 		$role = $this->role;
-		if($role == 'author' || $role == 'admin')
+		if($role == 'admin')
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public function can_project()
+	{
+		$role = $this->role;
+		if($role == 'author')
 		{
 			return true;
 		}
