@@ -17,10 +17,10 @@ class ProjectController extends Controller {
 	public function index(Request $request)
 	{
         if(($request->user()->is_admin())) {
-            //fetch 10 projects
-            $projects = Projects::orderBy('created_at', 'desc')->paginate(10);
+            //fetch 20 projects
+            $projects = Projects::orderBy('created_at', 'desc')->paginate(20);
             //page heading
-            $title = 'Latest Projects';
+            $title = '20 Latest Projects';
 
             return view('project')->withProjects($projects)->withTitle($title);
         }

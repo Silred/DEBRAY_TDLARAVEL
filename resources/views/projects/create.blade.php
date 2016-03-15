@@ -6,15 +6,6 @@ Add New Project
 
 @section('content')
 
-<script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
-<script type="text/javascript">
-	tinymce.init({
-		selector : "textarea",
-		plugins : ["advlist autolink lists link image charmap print preview anchor", "searchreplace visualblocks code fullscreen", "insertdatetime media table contextmenu paste jbimages"],
-		toolbar : "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages",
-	}); 
-</script>
-
 <form action="{{ url('/project/add') }}" method="post">
 
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -31,12 +22,12 @@ Add New Project
 	</div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('client_phone') }}" placeholder="Client phone" type="text" name = "client_phone" class="form-control" />
+        <input required="required" value="{{ old('client_phone') }}" placeholder="Client phone" type="tel" name = "client_phone" class="form-control" />
     </div>
 
 
     <div class="form-group">
-		<input required="required" value="{{ old('client_mail') }}" placeholder="Client mail" type="text" name = "client_mail" class="form-control" />
+		<input required="required" value="{{ old('client_mail') }}" placeholder="Client mail" type="email" name = "client_mail" class="form-control" />
 	</div>
 
 	<div class="form-group">
@@ -48,37 +39,48 @@ Add New Project
 	</div>
 
 	<div class="form-group">
-		<input required="required" value="{{ old('contact_mail') }}" placeholder="Contact mail" type="text" name = "contact_mail" class="form-control" />
+		<input required="required" value="{{ old('contact_mail') }}" placeholder="Contact mail" type="email" name = "contact_mail" class="form-control" />
 	</div>
 
 	<div class="form-group">
-		<input required="required" value="{{ old('contact_phone') }}" placeholder="Contact phone" type="text" name = "contact_phone" class="form-control" />
+		<input required="required" value="{{ old('contact_phone') }}" placeholder="Contact phone" type="tel" name = "contact_phone" class="form-control" />
 	</div>
 
 	<div class="form-group">
-		<input required="required" value="{{ old('client_info') }}" placeholder="Client Info" type="text" name = "client_info" class="form-control" />
+		<textarea  placeholder="Client Info" name = "client_info" class="form-control"></textarea>
 	</div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('project_type') }}" placeholder="Project type" type="text" name = "project_type" class="form-control" />
+        <select required="required" name = "project_type" class="form-control">
+            <option value="Web site">Web site</option>
+            <option value="3D">3D</option>
+            <option value="2D Animation">2D Animation</option>
+            <option value="Multimedia installation">Multimedia installation</option>
+            <option value="Video game">Video game</option>
+            <option value="DVD">DVD</option>
+            <option value="Print">Print</option>
+            <option value="CD-ROM">CD-ROM</option>
+            <option value="Event">Event</option>
+            <option value="Autre">Autre</option>
+        </select>
     </div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('context') }}" placeholder="Context" type="text" name = "context" class="form-control" />
+        <textarea  placeholder="Context" name="context" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('need') }}" placeholder="Need" type="text" name = "need" class="form-control" />
+        <textarea  placeholder="Need" name="need" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('goals') }}" placeholder="Goals" type="text" name = "goals" class="form-control" />
+        <textarea  placeholder="Goals" name="goals" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <input required="required" value="{{ old('more_infos') }}" placeholder="More infos" type="text" name = "more_infos" class="form-control" />
+        <textarea  placeholder="More infos" name="more_infos" class="form-control"></textarea>
     </div>
 
-	<input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
+	<input type="submit" name='publish' class="btn btn-success" value="Publish"/>
 </form>
 @endsection

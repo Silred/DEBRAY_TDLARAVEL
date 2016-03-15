@@ -14,33 +14,37 @@
         <div class="">
             @foreach( $projects as $project )
                 @if($project->active == 0)
-                <div class="list-group">
-                    <div class="list-group-item">
-                        <h3><a href="{{ url('project/show/'.$project->slug) }}">{{ $project->title }}</a>
-                        </h3>
-                        <p>{{ $project->created_at->format('M d,Y \a\t h:i a') }}</p>
+                    <a href="{{ url('project/show/'.$project->slug) }}">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <h3>{{ $project->title }}</h3>
+                                <p>{{ $project->created_at->format('M d,Y \a\t h:i a') }}</p>
 
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    </a>
                     @elseif($project->active == 1)
+                            <a style="color: #ffffff!important;" href="{{ url('project/show/'.$project->slug) }}">
                         <div class="list-group">
                             <div class="list-group-item"  style="background-color: #56b056!important; color: #ffffff;">
-                                <h3><a style="color: #ffffff!important;" href="{{ url('project/show/'.$project->slug) }}">{{ $project->title }}</a>
-                                </h3>
+                                <h3>{{ $project->title }}</h3>
                                 <p>{{ $project->created_at->format('M d,Y \a\t h:i a') }}</p>
 
                             </div>
                         </div>
+                            </a>
                     @else
+                                    <a style="color: #ffffff!important;" href="{{ url('project/show/'.$project->slug) }}">
                         <div class="list-group">
                             <div class="list-group-item" style="background-color: #cc3e3a!important; color: #ffffff">
-                                <h3><a style="color: #ffffff!important;" href="{{ url('project/show/'.$project->slug) }}">{{ $project->title }}</a>
-                                </h3>
+                                <h3>{{ $project->title }}</h3>
                                 <p>{{ $project->created_at->format('M d,Y \a\t h:i a') }}</p>
 
                             </div>
                         </div>
+                                    </a>
                 @endif
+
             @endforeach
         </div>
     @endif

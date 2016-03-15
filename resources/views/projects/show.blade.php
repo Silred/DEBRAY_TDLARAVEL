@@ -4,8 +4,11 @@
 	@if($project)
 		{{ $project->title }}
 		@if(Auth::user()->is_admin())
-            @if($project->active == 1 || $project->active == 2)
-                @else
+            @if($project->active == 1)
+                <h2 style="color: #56b056; font-weight: bold; float: right; margin: 0px">Project accepted</h2>
+            @elseif($project->active == 2)
+                <h2 style="color: #cc3e3a; font-weight: bold; float: right; margin: 0px">Project refused</h2>
+            @else
                 <form method="post" action='{{ url("project/") }}'>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="project_id" value="{{ $project->id }}">
