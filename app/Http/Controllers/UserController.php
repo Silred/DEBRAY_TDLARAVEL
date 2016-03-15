@@ -24,46 +24,42 @@ class UserController extends Controller {
 		return view('home')->withPosts($posts)->withTitle($title);
 	}
 
-	public function user_posts_all(Request $request)
-	{
-		//
-		$user = $request->user();
-		$posts = Posts::where('author_id',$user->id)->orderBy('created_at','desc')->paginate(5);
-		$title = $user->name;
-		return view('home')->withPosts($posts)->withTitle($title);
-	}
-	
-	public function user_posts_draft(Request $request)
-	{
-		//
-		$user = $request->user();
-		$posts = Posts::where('author_id',$user->id)->where('active','0')->orderBy('created_at','desc')->paginate(5);
-		$title = $user->name;
-		return view('home')->withPosts($posts)->withTitle($title);
-	}
-
 	/**
 	 * profile for user
 	 */
 	public function profile(Request $request, $id) 
 	{
-		$data['user'] = User::find($id);
-		if (!$data['user'])
-			return redirect('/');
+		if($id == $request->user()->id) {
+			$data['user'] = User::find($id);
+			if (!$data['user'])
+				return redirect('/');
 
-		if ($request -> user() && $data['user'] -> id == $request -> user() -> id) {
-			$data['author'] = true;
-		} else {
-			$data['author'] = null;
+			return view('admin.profile', $data);
 		}
-		$data['comments_count'] = $data['user'] -> comments -> count();
-		$data['posts_count'] = $data['user'] -> posts -> count();
-		$data['posts_active_count'] = $data['user'] -> posts -> where('active', '1') -> count();
-		$data['posts_draft_count'] = $data['posts_count'] - $data['posts_active_count'];
-		$data['latest_posts'] = $data['user'] -> posts -> where('active', '1') -> take(5);
-		$data['latest_comments'] = $data['user'] -> comments -> take(5);
-		return view('admin.profile', $data);
+		else{
+			return redirect('/')->withMessage('You have not sufficient permissions');
+		}
 	}
 
+	public function update(Request $request, $id)
+	{
+		if($id == $request->user()->id) {
+			$users = User::find($id);
+			if (!$users)
+				return redirect('/');
+			else {
+
+				$users->name = $request->input('name');
+				$users->email = $request->input('email');
+
+				$message = 'Saved successfully';
+				$users->save();
+				return redirect('/user/' . $id)->withMessage($message);
+			}
+		}
+		else{
+			return redirect('/')->withMessage('You have not sufficient permissions');
+		}
+	}
 }
 

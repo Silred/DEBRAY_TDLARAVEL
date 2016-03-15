@@ -93,19 +93,6 @@ class ProjectController extends Controller {
         return view('projects.show')->withProject($project);
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit(Request $request,$slug)
-	{
-        $project = Projects::where('slug',$slug)->first();
-        if($project && ($request->user()->is_admin()))
-            return view('project.edit')->with('project',$project);
-        return redirect('/')->withErrors('You have not sufficient permissions');
-    }
 
 	/**
 	 * Update the specified resource in storage.
@@ -116,7 +103,8 @@ class ProjectController extends Controller {
 	public function update(Request $request)
 	{
         $project_id = $request->input('project_id');
-        $project = Projects::find($project_id);
+
+
         if($project && ($request->user()->is_admin()))
         {
             if($request->has('confirmed'))
