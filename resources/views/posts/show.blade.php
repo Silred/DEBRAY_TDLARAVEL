@@ -48,6 +48,13 @@
 					<div class="list-group">
 						<div class="list-group-item">
 							<h3>{{ $comment->author->name }}</h3>
+							@if (Auth::user()->can_post())
+							<form method="post" action='{{ url("comment/delete/".$comment->id) }}'>
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<input type="hidden" name="slug" value="{{$post->slug}}" class="btn btn-danger"/>
+								<input type="submit" style="float: right;" value="Delete" class="btn btn-danger"/>
+							</form>
+							@endif
 							<p>{{ $comment->created_at->format('M d,Y \a\t h:i a') }}</p>
 						</div>
 						<div class="list-group-item">

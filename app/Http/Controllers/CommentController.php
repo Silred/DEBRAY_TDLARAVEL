@@ -86,9 +86,23 @@ class CommentController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy(Request $request, $id)
 	{
-		//
+		$comment = Comments::find($id);
+		if($comment && ($request->user()->is_admin()))
+		{
+			$comment->delete();
+			$data['message'] = 'Post deleted Successfully';
+			$redirect = $request->input('slug');
+			return redirect('/'.$redirect)->with($data);
+		}
+		else
+		{
+			$data['errors'] = 'Invalid Operation. You have not sufficient permissions';
+			return redirect('/')->with($data);
+		}
+
+
 	}
 
 }
