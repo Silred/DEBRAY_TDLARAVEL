@@ -120,7 +120,7 @@ class PostController extends Controller {
 		//
 		$post_id = $request->input('post_id');
 		$post = Posts::find($post_id);
-		if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
+		if($post && ($request->user()->is_admin()))
 		{
 			$title = $request->input('title');
 			$slug = str_slug($title);
@@ -139,18 +139,12 @@ class PostController extends Controller {
 			
 			$post->title = $title;
 			$post->body = $request->input('body');
-			
-			if($request->has('save'))
-			{
-				$post->active = 0;
-				$message = 'Post saved successfully';
-				$landing = 'edit/'.$post->slug;
-			}			
-			else {
-				$post->active = 1;
-				$message = 'Post updated successfully';
-				$landing = $post->slug;
-			}
+
+			$post->active = 1;
+			$message = 'Post saved successfully';
+			$landing = 'edit/'.$post->slug;
+
+
 			$post->save();
 	 		return redirect($landing)->withMessage($message);
 		}

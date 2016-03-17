@@ -31,10 +31,12 @@ class UserController extends Controller {
 	{
 		if($id == $request->user()->id) {
 			$data['user'] = User::find($id);
-			if (!$data['user'])
+			if (!$data['user']) {
 				return redirect('/');
-
-			return view('admin.profile', $data);
+			}
+			else {
+				return view('admin.profile', $data);
+			}
 		}
 		else{
 			return redirect('/')->withMessage('You have not sufficient permissions');
@@ -60,6 +62,12 @@ class UserController extends Controller {
 		else{
 			return redirect('/')->withMessage('You have not sufficient permissions');
 		}
+	}
+
+
+	public function contact()
+	{
+		return view('contact');
 	}
 }
 

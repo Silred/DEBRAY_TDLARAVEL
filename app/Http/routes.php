@@ -2,7 +2,8 @@
 
 Route::get('/',['as' => 'home', 'uses' => 'PostController@index']);
 
-Route::get('/home',['as' => 'home', 'uses' => 'PostController@index']);
+// contact page
+Route::get('contact','UserController@contact');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -67,5 +68,4 @@ Route::group(['middleware' => ['auth']], function()
 // display single post
 Route::get('/{slug}',['as' => 'post', 'uses' => 'PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
-// contact page
-Route::get('contact','ContactController@index');
+
