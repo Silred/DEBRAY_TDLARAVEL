@@ -43,7 +43,6 @@ Route::group(['middleware' => ['auth']], function()
     // display a project
     Route::get('project/show/{slug}',['as' => 'project', 'uses' => 'ProjectController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
-
     // list project
     Route::get('project','ProjectController@index');
 
@@ -56,15 +55,17 @@ Route::group(['middleware' => ['auth']], function()
 	// delete comment
 	Route::post('comment/delete/{id}','CommentController@destroy');
 
+	//users profile
+	Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
+
+	//users modifications
+	Route::post('user/{id}','UserController@update')->where('id', '[0-9]+');
 
 });
 
-//users profile
-Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
-
-//users modifications
-Route::post('user/{id}','UserController@update')->where('id', '[0-9]+');
 
 // display single post
 Route::get('/{slug}',['as' => 'post', 'uses' => 'PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
+// contact page
+Route::get('contact','ContactController@index');

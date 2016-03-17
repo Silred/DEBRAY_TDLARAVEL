@@ -5,6 +5,8 @@
 @endsection
 
 @section('content')
+
+
 <div>
 	<ul class="list-group">
 		<li class="list-group-item">
@@ -22,7 +24,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading"><h3>Name</h3></div>
 						<div class="panel-body">
-							<input name="name" type="text" value="{{Auth::user()->name}}" />
+							<input class="form-control" name="name" type="text" value="{{Auth::user()->name}}" />
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						</div>
 					</div>
@@ -32,7 +34,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading"><h3>Email</h3></div>
 						<div class="panel-body">
-							<input name="email"  type="email" value="{{Auth::user()->email}}"/>
+							<input class="form-control" name="email"  type="email" value="{{Auth::user()->email}}"/>
 						</div>
 					</div>
 						<input type="submit" value="Change"/>

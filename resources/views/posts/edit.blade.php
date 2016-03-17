@@ -29,7 +29,6 @@ Edit Post
 		</textarea>
 	</div>
 	<input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
-	<input type="submit" name='save' class="btn btn-default" value = "Save As Draft" />
 	<a href="{{  url('delete/'.$post->id.'?_token='.csrf_token()) }}" class="btn btn-danger">Delete</a>
 </form>
 @endsection
