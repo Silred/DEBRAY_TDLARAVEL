@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/',['as' => 'home', 'uses' => 'PostController@index']);
+Route::get('/home',['as' => 'home', 'uses' => 'PostController@index']);
 
 // contact page
 Route::get('contact','UserController@contact');
