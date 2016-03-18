@@ -104,6 +104,7 @@ class ProjectController extends Controller {
 	{
         $project_id = $request->input('project_id');
 
+		$project = Projects::where('id',$project_id)->first();
 
         if($project && ($request->user()->is_admin()))
         {
